@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdropHub — 에어드롭 · 야핑 · 테스트넷 총집합 | Airdrop Farming Aggregator</title>
+<meta name="description" content="에어드롭, 야핑, 테스트넷 정보 자동 수집. AirdropAlert, Reddit, DeFiLlama 등 8개+ 소스에서 실시간 피드.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://adrophub.netlify.app/">
+<meta property="og:title" content="AdropHub — Airdrop & Farming Aggregator">
+<meta property="og:description" content="8+ sources auto-aggregated: AirdropAlert, Reddit, DeFiLlama, CoinDesk and more.">
+<meta property="og:type" content="website">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"AdropHub","url":"https://adrophub.netlify.app/"}</script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Pretendard:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg0:#050508;--bg2:#111118;--bg3:#18181f;--bg4:#1f1f28;--b1:#1e1e2a;--b2:#2a2a38;--ba:rgba(56,255,156,.25);--t1:#f0f0f5;--t2:#a0a0b8;--t3:#606078;--t4:#404058;--g:#38ff9c;--gd:#2acc7a;--r:#ff4466;--bl:#4488ff;--y:#ffd644;--p:#a86eff;--o:#ff8844;--mono:'IBM Plex Mono',monospace;--sans:'Pretendard',-apple-system,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:var(--sans);background:var(--bg0);color:var(--t1);line-height:1.5;-webkit-font-smoothing:antialiased}a{color:inherit;text-decoration:none}
+::-webkit-scrollbar{width:5px;height:5px}::-webkit-scrollbar-thumb{background:var(--b2);border-radius:3px}
+.hdr{position:sticky;top:0;z-index:200;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--b1)}
+.hdr-in{max-width:1440px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:50px;padding:0 14px}
+.logo{font-family:var(--mono);font-weight:700;font-size:1.05rem;color:var(--g)}.logo b{color:var(--t4);font-weight:400;font-size:.55rem;margin-left:4px}
+.hdr-r{display:flex;align-items:center;gap:6px}
+.dot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:bl 2s infinite}@keyframes bl{50%{opacity:.3}}
+#st{font-family:var(--mono);font-size:.6rem;color:var(--t3)}
+.sbtn{padding:3px 7px;border-radius:3px;font-size:.6rem;font-family:var(--mono);background:var(--bg3);border:1px solid var(--b2);color:var(--t3);cursor:pointer}.sbtn:hover{border-color:var(--g);color:var(--g)}
+.lsel{font-size:.6rem;background:var(--bg3);border:1px solid var(--b2);color:var(--t2);border-radius:3px;padding:2px 5px;font-family:var(--mono);outline:none}
+.tabs{display:flex;padding:0 14px;max-width:1440px;margin:0 auto;background:var(--bg0);border-bottom:1px solid var(--b1);overflow-x:auto;gap:1px}
+.tab{padding:8px 13px;font-size:.75rem;font-weight:500;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;user-select:none}.tab:hover{color:var(--t2)}.tab.on{color:var(--g);border-color:var(--g)}
+.wrap{max-width:1440px;margin:0 auto;padding:14px}.sec{display:none}.sec.on{display:block;animation:fu .2s}@keyframes fu{from{opacity:0;transform:translateY(4px)}to{opacity:1}}
+.ad-slot{background:var(--bg2);border:1px dashed var(--b2);border-radius:8px;padding:12px;text-align:center;margin-bottom:14px;min-height:80px;display:flex;align-items:center;justify-content:center;color:var(--t4);font-size:.65rem;font-family:var(--mono)}
+.ticker{display:flex;gap:5px;padding:8px 0;overflow-x:auto;margin-bottom:12px}
+.tk{flex-shrink:0;min-width:132px;background:var(--bg2);border:1px solid var(--b1);border-radius:8px;padding:8px 10px;cursor:default;transition:border-color .15s}.tk:hover{border-color:var(--ba)}
+.tk-top{display:flex;align-items:center;gap:4px;margin-bottom:3px}.tk-ic{font-size:.75rem;font-weight:700}.tk-s{font-family:var(--mono);font-weight:600;font-size:.72rem}.tk-n{font-size:.55rem;color:var(--t4);margin-left:auto}
+.tk-p{font-family:var(--mono);font-size:.9rem;font-weight:700}.tk-c{font-family:var(--mono);font-size:.65rem;font-weight:600}.tk-c.up{color:var(--g)}.tk-c.dn{color:var(--r)}
+.tk-ld{height:12px;border-radius:3px;background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center}.modal-bg.on{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--b2);border-radius:12px;padding:22px;max-width:380px;width:90%}.modal h3{margin-bottom:5px;font-size:.9rem}.modal p{font-size:.75rem;color:var(--t2);margin-bottom:12px;line-height:1.5}
+.modal input{width:100%;padding:8px 10px;background:var(--bg3);border:1px solid var(--b2);border-radius:5px;color:var(--t1);font-family:var(--mono);font-size:.8rem;outline:none;margin-bottom:8px}.modal input:focus{border-color:var(--g)}
+.mbtn{display:flex;gap:6px;justify-content:flex-end}.mb{padding:6px 14px;border-radius:5px;font-weight:700;font-size:.78rem;cursor:pointer;border:none;font-family:var(--sans)}.ms{background:var(--g);color:#000}.mk{background:var(--bg4);color:var(--t3)}
+.st{font-size:.85rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}.st::before{content:'';width:3px;height:13px;background:linear-gradient(var(--g),var(--bl));border-radius:2px}.st .sub{font-size:.62rem;color:var(--t4);font-weight:400;margin-left:auto}
+.grid{display:grid;gap:8px;margin-bottom:18px}.g2{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.g3{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+/* Feed cards */
+.fc{background:var(--bg2);border:1px solid var(--b1);border-radius:10px;padding:14px;transition:border-color .15s,transform .12s}.fc:hover{border-color:var(--ba);transform:translateY(-1px)}
+.fc h4{font-size:.85rem;margin-bottom:3px;line-height:1.3}.fc h4 a:hover{color:var(--g)}
+.fc p{font-size:.73rem;color:var(--t2);line-height:1.35;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.fc-m{display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:.58rem;color:var(--t4);flex-wrap:wrap}
+.fc-src{padding:1px 5px;border-radius:3px;font-weight:600}
+.src-aa{background:rgba(255,136,68,.12);color:var(--o)}.src-rd{background:rgba(255,68,102,.12);color:var(--r)}.src-dl{background:rgba(56,255,156,.12);color:var(--g)}.src-cd{background:rgba(68,136,255,.12);color:var(--bl)}.src-ct{background:rgba(168,110,255,.12);color:var(--p)}.src-bm{background:rgba(255,214,68,.12);color:var(--y)}
+.fc-lk{display:inline-flex;padding:5px 10px;border-radius:5px;font-size:.7rem;font-weight:600;background:rgba(56,255,156,.06);border:1px solid rgba(56,255,156,.12);color:var(--g);margin-top:6px;transition:all .12s}.fc-lk:hover{background:rgba(56,255,156,.12)}
+/* Filters */
+.fbar{display:flex;gap:4px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+.fb{padding:4px 10px;border-radius:12px;font-size:.68rem;font-weight:600;background:var(--bg3);border:1px solid var(--b1);color:var(--t3);cursor:pointer;font-family:var(--sans)}.fb:hover{color:var(--t2)}.fb.on{background:rgba(56,255,156,.08);border-color:var(--ba);color:var(--g)}
+.feed-cnt{font-family:var(--mono);font-size:.6rem;color:var(--t4);margin-left:auto}
+/* Loading */
+.ld{text-align:center;padding:28px;color:var(--t4);font-size:.78rem}
+.ld-spin{display:inline-block;width:16px;height:16px;border:2px solid var(--b2);border-top-color:var(--g);border-radius:50%;animation:sp .6s linear infinite;margin-right:6px}@keyframes sp{to{transform:rotate(360deg)}}
+/* News tabs */
+.ntabs{display:flex;gap:3px;margin-bottom:10px}
+.nt{padding:4px 9px;border-radius:12px;font-size:.68rem;font-weight:600;background:var(--bg3);border:1px solid var(--b1);color:var(--t3);cursor:pointer;font-family:var(--sans)}.nt:hover{color:var(--t2)}.nt.on{background:rgba(56,255,156,.08);border-color:var(--ba);color:var(--g)}
+.ni{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--b1)}.ni:last-child{border-bottom:none}.ni-t{font-family:var(--mono);font-size:.6rem;color:var(--t4);min-width:46px}.ni-b{flex:1}.ni-h{font-size:.8rem;font-weight:600;margin-bottom:2px;line-height:1.3}.ni-h a:hover{color:var(--g)}.ni-s{font-size:.6rem;color:var(--t4)}
+/* Guide */
+.info-box{background:var(--bg2);border:1px solid var(--b2);border-radius:10px;padding:18px;margin-bottom:14px}.info-box h3{font-size:.88rem;margin-bottom:6px;color:var(--g)}.info-box h4{margin:12px 0 5px;font-size:.82rem}.info-box p,.info-box li{font-size:.78rem;color:var(--t2);line-height:1.5}.info-box ul{padding-left:16px;margin:5px 0}
+.gs{margin:8px 0;padding:0;list-style:none;counter-reset:s}.gs li{counter-increment:s;position:relative;padding:5px 0 5px 26px;font-size:.75rem;color:var(--t2);line-height:1.45;border-left:1px solid var(--b2);margin-left:9px}
+.gs li::before{content:counter(s);position:absolute;left:-9px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--bg4);border:1px solid var(--b2);color:var(--g);font-family:var(--mono);font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center}
+.gs li a{color:var(--g);text-decoration:underline}.gs li a:hover{color:var(--gd)}
+/* Social */
+.soc{display:flex;align-items:center;gap:8px;padding:10px 11px;background:var(--bg2);border:1px solid var(--b1);border-radius:7px;transition:all .12s}.soc:hover{border-color:var(--ba);background:var(--bg3)}
+.soc-a{width:28px;height:28px;border-radius:50%;background:var(--bg4);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}.soc-n{font-weight:700;font-size:.78rem}.soc-h{font-family:var(--mono);font-size:.6rem;color:var(--t4)}.soc-tg{font-size:.54rem;padding:2px 5px;border-radius:3px;background:var(--bg4);color:var(--t4);font-weight:600;white-space:nowrap}
+.tl{display:flex;align-items:center;gap:8px;padding:11px;background:var(--bg2);border:1px solid var(--b1);border-radius:7px;transition:all .12s}.tl:hover{border-color:var(--ba)}.tl-i{font-size:1.1rem}.tl-n{font-weight:700;font-size:.8rem}.tl-d{font-size:.68rem;color:var(--t3)}
+.farm-hero{background:linear-gradient(135deg,rgba(255,136,68,.06),rgba(255,214,68,.04));border:1px solid rgba(255,136,68,.18);border-radius:12px;padding:20px;margin-bottom:16px}
+.farm-hero h2{font-size:1rem;margin-bottom:4px;color:var(--o)}.farm-hero p{font-size:.8rem;color:var(--t2)}
+.ftr{max-width:1440px;margin:24px auto 0;padding:12px 14px;border-top:1px solid var(--b1);text-align:center;color:var(--t4);font-size:.6rem}.ftr a{color:var(--g)}
+@media(max-width:768px){.wrap{padding:10px}.g2,.g3{grid-template-columns:1fr}.tab{padding:7px 9px;font-size:.7rem}.tk{min-width:120px}}
+</style>
+</head>
+<body>
+<header class="hdr"><div class="hdr-in">
+<div class="logo">AdropHub<b>v8 FEED AGGREGATOR</b></div>
+<div class="hdr-r"><select class="lsel" onchange="document.documentElement.lang=this.value"><option value="ko">🇰🇷</option><option value="en">🇺🇸</option><option value="ja">🇯🇵</option><option value="zh">🇨🇳</option></select><div class="dot"></div><span id="st">...</span><button class="sbtn" onclick="openM()">🔑</button></div>
+</div></header>
+<div class="modal-bg" id="modal"><div class="modal"><h3>🔑 CoinGecko API</h3><p>무료 Demo 키 필요. <a href="https://www.coingecko.com/en/api/pricing" target="_blank" style="color:var(--g)">무료 발급 →</a><br>localStorage에만 저장.</p><input id="kIn" type="password" placeholder="CG-xxx" autocomplete="off"><div class="mbtn"><button class="mb mk" onclick="closeM()">닫기</button><button class="mb ms" onclick="saveK()">저장</button></div></div></div>
+<nav class="tabs">
+<div class="tab on" data-t="dash">📊 대시보드</div>
+<div class="tab" data-t="farm">🌾 야핑</div>
+<div class="tab" data-t="drops">🪂 에어드롭</div>
+<div class="tab" data-t="guide">📖 가이드</div>
+<div class="tab" data-t="news">📰 뉴스</div>
+<div class="tab" data-t="social">🔗 계정</div>
+<div class="tab" data-t="tools">🛠 도구</div>
+</nav>
+<div class="wrap">
+<div class="ad-slot">📢 광고 영역</div>
+
+<!-- DASHBOARD -->
+<div class="sec on" id="s-dash">
+<div class="ticker" id="ticker"></div>
+<div class="st">🔴 실시간 에어드롭 피드 <span class="sub">8개 소스 자동 수집</span></div>
+<div class="fbar"><div class="fb on" data-sf="all">All</div><div class="fb" data-sf="airdropalert">AirdropAlert</div><div class="fb" data-sf="reddit">Reddit</div><div class="fb" data-sf="defi">DeFi</div><span class="feed-cnt" id="dashCnt"></span></div>
+<div id="dashFeed" class="ld"><span class="ld-spin"></span>피드 수집중...</div>
+<div class="ad-slot" style="margin-top:14px">📢 광고 영역</div>
+<div class="st">📰 뉴스 <span class="sub" style="cursor:pointer" onclick="switchTab('news')">더보기 →</span></div>
+<div id="dashNews" class="ld"><span class="ld-spin"></span>뉴스 로딩...</div>
+</div>
+
+<!-- FARMING -->
+<div class="sec" id="s-farm">
+<div class="farm-hero"><h2>🌾 야핑 (Farming) — 포인트 파밍 에어드롭</h2><p>프로젝트 사용 → 포인트 적립 → 토큰 에어드롭. Hyperliquid S1은 이걸로 수천만원씩 받음. 소액 가스비만 있으면 시작.</p></div>
+<div class="st">🔴 야핑/파밍 관련 피드 <span class="sub" id="farmCnt"></span></div>
+<div id="farmFeed" class="ld"><span class="ld-spin"></span>피드 수집중...</div>
+<div class="info-box"><h3>💡 야핑 주간 루틴</h3>
+<ol class="gs">
+<li>월: <a href="https://app.hyperliquid.xyz/" target="_blank">Hyperliquid</a> 거래 2-3건</li>
+<li>화: <a href="https://stargate.finance/" target="_blank">Stargate</a> 등 LayerZero 브릿지 1건</li>
+<li>수: <a href="https://meteora.ag/" target="_blank">Meteora</a> LP 확인/리밸런싱</li>
+<li>목: <a href="https://base.org/" target="_blank">Base</a> dApp 스왑 1-2건</li>
+<li>금: 새 프로젝트 리서치 + 테스트넷</li>
+<li>주말: 포인트 대시보드 점검</li>
+</ol></div>
+<div class="st">📋 야핑 플랫폼 바로가기</div>
+<div class="grid g3">
+<a href="https://app.hyperliquid.xyz/" target="_blank" class="tl"><span class="tl-i">⚡</span><div><div class="tl-n">Hyperliquid</div><div class="tl-d">Perp DEX S2</div></div></a>
+<a href="https://layerzero.network/" target="_blank" class="tl"><span class="tl-i">🌐</span><div><div class="tl-n">LayerZero</div><div class="tl-d">Bridge</div></div></a>
+<a href="https://meteora.ag/" target="_blank" class="tl"><span class="tl-i">🪐</span><div><div class="tl-n">Meteora</div><div class="tl-d">Solana LP</div></div></a>
+<a href="https://polymarket.com/" target="_blank" class="tl"><span class="tl-i">🎯</span><div><div class="tl-n">Polymarket</div><div class="tl-d">Prediction</div></div></a>
+<a href="https://soneium.org/" target="_blank" class="tl"><span class="tl-i">🎮</span><div><div class="tl-n">Soneium</div><div class="tl-d">Sony L2</div></div></a>
+<a href="https://fogo.io/" target="_blank" class="tl"><span class="tl-i">🔥</span><div><div class="tl-n">Fogo</div><div class="tl-d">SVM Flames</div></div></a>
+<a href="https://aster.finance/" target="_blank" class="tl"><span class="tl-i">⭐</span><div><div class="tl-n">Aster</div><div class="tl-d">Perp DEX</div></div></a>
+<a href="https://pump.fun/" target="_blank" class="tl"><span class="tl-i">🐸</span><div><div class="tl-n">Pump.fun</div><div class="tl-d">Memecoin</div></div></a>
+<a href="https://backpack.exchange/" target="_blank" class="tl"><span class="tl-i">🎒</span><div><div class="tl-n">Backpack</div><div class="tl-d">SOL Exchange</div></div></a>
+</div>
+<div class="ad-slot">📢 광고 영역</div>
+</div>
+
+<!-- AIRDROPS -->
+<div class="sec" id="s-drops">
+<div class="st">🪂 에어드롭 & 테스트넷 피드 <span class="sub" id="dropCnt"></span></div>
+<div class="fbar"><div class="fb on" data-df="all">All</div><div class="fb" data-df="airdropalert">AirdropAlert</div><div class="fb" data-df="reddit">Reddit</div></div>
+<div id="dropFeed" class="ld"><span class="ld-spin"></span>피드 수집중...</div>
+<div class="ad-slot">📢 광고 영역</div>
+<div class="st">📋 에어드롭 트래커 & 커뮤니티</div>
+<div class="grid g3">
+<a href="https://airdrops.io/" target="_blank" class="tl"><span class="tl-i">🪂</span><div><div class="tl-n">Airdrops.io</div><div class="tl-d">600+</div></div></a>
+<a href="https://airdropalert.com/" target="_blank" class="tl"><span class="tl-i">🔔</span><div><div class="tl-n">AirdropAlert</div><div class="tl-d">실시간</div></div></a>
+<a href="https://www.reddit.com/r/CryptoAirdrops/" target="_blank" class="tl"><span class="tl-i">🟠</span><div><div class="tl-n">r/CryptoAirdrops</div><div class="tl-d">Reddit</div></div></a>
+<a href="https://www.reddit.com/r/airdropalert/" target="_blank" class="tl"><span class="tl-i">🟠</span><div><div class="tl-n">r/airdropalert</div><div class="tl-d">Reddit</div></div></a>
+<a href="https://www.reddit.com/r/defi/" target="_blank" class="tl"><span class="tl-i">🟠</span><div><div class="tl-n">r/defi</div><div class="tl-d">DeFi</div></div></a>
+<a href="https://dropstab.com/activities" target="_blank" class="tl"><span class="tl-i">📋</span><div><div class="tl-n">DropsTab</div><div class="tl-d">Events</div></div></a>
+<a href="https://defillama.com/airdrops" target="_blank" class="tl"><span class="tl-i">🦙</span><div><div class="tl-n">DefiLlama</div><div class="tl-d">DeFi</div></div></a>
+<a href="https://app.galxe.com/" target="_blank" class="tl"><span class="tl-i">🌌</span><div><div class="tl-n">Galxe</div><div class="tl-d">Quests</div></div></a>
+<a href="https://incrypted.com/en/airdrops/" target="_blank" class="tl"><span class="tl-i">🌐</span><div><div class="tl-n">Incrypted</div><div class="tl-d">Global</div></div></a>
+<a href="https://t.me/airdrop_alert_dot_com" target="_blank" class="tl"><span class="tl-i">✈️</span><div><div class="tl-n">Telegram</div><div class="tl-d">Alerts</div></div></a>
+</div>
+</div>
+
+<!-- GUIDE -->
+<div class="sec" id="s-guide">
+<div class="st">📖 에어드롭/야핑 가이드</div>
+<div class="info-box"><h3>🛠 사전 준비</h3><ol class="gs">
+<li><a href="https://metamask.io/" target="_blank">MetaMask</a> + <a href="https://phantom.app/" target="_blank">Phantom</a> 설치</li>
+<li>ETH/SOL 소량 ($5~20 가스비)</li>
+<li><a href="https://chainlist.org/" target="_blank">Chainlist</a>에서 Base/Arb/OP RPC 추가</li>
+<li>에어드롭 전용 지갑 따로 생성</li>
+<li>X, Discord, Telegram 계정</li>
+</ol></div>
+<div class="info-box"><h3 style="color:var(--y)">🧪 테스트넷 (무료!)</h3><p>메인넷 전 테스트. 가스비 0원.</p><ol class="gs"><li>테스트넷 사이트 접속</li><li>Faucet에서 테스트 토큰</li><li>스왑/브릿지/스테이킹 테스트</li><li>피드백 (Discord)</li><li>주 2~3회 꾸준히</li></ol>
+<p style="font-size:.73rem;color:var(--t3);margin-top:6px">추천: <a href="https://monad.xyz/" target="_blank" style="color:var(--y)">Monad</a> · <a href="https://berachain.com/" target="_blank" style="color:var(--y)">Berachain</a> · <a href="https://www.inco.org/" target="_blank" style="color:var(--y)">Inco</a></p></div>
+<div class="info-box"><h3 style="color:var(--o)">🌾 야핑 (소액 가스비)</h3><ol class="gs"><li>앱 → 지갑 연결</li><li>소액 스왑/브릿지</li><li>LP or 스테이킹</li><li>포인트 대시보드 확인</li><li>매주 꾸준히</li></ol></div>
+<div class="info-box"><h3 style="color:var(--r)">⚠️ 주의</h3><ul><li>시드구/비밀키 입력 = 스캠 100%</li><li><a href="https://revoke.cash/" target="_blank" style="color:var(--g)">Revoke.cash</a>로 어프루벌 해지</li><li>에어드롭 전용 지갑 사용</li><li>시빌 = 차단</li><li>"입금하면 에어드롭" = 스캠</li></ul></div>
+</div>
+
+<!-- NEWS -->
+<div class="sec" id="s-news">
+<div class="st">📰 Crypto News</div>
+<div class="ntabs"><div class="nt on" data-ns="all">🌐 All</div><div class="nt" data-ns="en">🇺🇸 EN</div><div class="nt" data-ns="kr">🇰🇷 KR</div></div>
+<div id="newsFull" class="ld"><span class="ld-spin"></span>Loading...</div>
+</div>
+
+<!-- SOCIAL -->
+<div class="sec" id="s-social">
+<div class="st">🔗 X Shortcuts</div>
+<div class="st" style="font-size:.78rem">📊 Exchanges</div><div class="grid g3" id="sE" style="margin-bottom:12px"></div>
+<div class="st" style="font-size:.78rem">🐋 Alpha</div><div class="grid g3" id="sA" style="margin-bottom:12px"></div>
+<div class="st" style="font-size:.78rem">🔗 Protocols</div><div class="grid g3" id="sP" style="margin-bottom:12px"></div>
+<div class="st" style="font-size:.78rem">🇰🇷 Korean</div><div class="grid g3" id="sK"></div>
+</div>
+
+<!-- TOOLS -->
+<div class="sec" id="s-tools">
+<div class="st">🛠 Tools</div>
+<div class="grid g3">
+<a href="https://www.coingecko.com/" target="_blank" class="tl"><span class="tl-i">📈</span><div><div class="tl-n">CoinGecko</div><div class="tl-d">시세</div></div></a>
+<a href="https://defillama.com/" target="_blank" class="tl"><span class="tl-i">🦙</span><div><div class="tl-n">DefiLlama</div><div class="tl-d">TVL</div></div></a>
+<a href="https://dexscreener.com/" target="_blank" class="tl"><span class="tl-i">🔍</span><div><div class="tl-n">DEX Screener</div><div class="tl-d">차트</div></div></a>
+<a href="https://etherscan.io/" target="_blank" class="tl"><span class="tl-i">⛓️</span><div><div class="tl-n">Etherscan</div><div class="tl-d">ETH</div></div></a>
+<a href="https://solscan.io/" target="_blank" class="tl"><span class="tl-i">☀️</span><div><div class="tl-n">Solscan</div><div class="tl-d">SOL</div></div></a>
+<a href="https://revoke.cash/" target="_blank" class="tl"><span class="tl-i">🛡️</span><div><div class="tl-n">Revoke.cash</div><div class="tl-d">보안</div></div></a>
+<a href="https://debank.com/" target="_blank" class="tl"><span class="tl-i">🏦</span><div><div class="tl-n">DeBank</div><div class="tl-d">포폴</div></div></a>
+<a href="https://chainlist.org/" target="_blank" class="tl"><span class="tl-i">🔗</span><div><div class="tl-n">Chainlist</div><div class="tl-d">RPC</div></div></a>
+<a href="https://app.galxe.com/" target="_blank" class="tl"><span class="tl-i">🌌</span><div><div class="tl-n">Galxe</div><div class="tl-d">Quests</div></div></a>
+</div>
+</div>
+</div>
+<div class="ad-slot" style="max-width:1440px;margin:0 auto;border-radius:0">📢 광고 하단</div>
+<footer class="ftr">AdropHub v8 Feed Aggregator | Sources: AirdropAlert · Reddit · CoinDesk · CoinTelegraph · 블록미디어 · DeFiLlama | ⚠️ DYOR</footer>
+
+<script>
+const CG='https://api.coingecko.com/api/v3',R2J='https://api.rss2json.com/v1/api.json',RF=30000;
+
+// ===== ALL FEED SOURCES =====
+const SOURCES=[
+  // Airdrop feeds
+  {id:'airdropalert',url:'https://airdropalert.com/feed/rssfeed',name:'AirdropAlert',src:'src-aa',cat:'airdrop',count:25},
+  {id:'reddit_ca',url:'https://www.reddit.com/r/CryptoAirdrops/new/.rss',name:'r/CryptoAirdrops',src:'src-rd',cat:'airdrop',count:20},
+  {id:'reddit_aa',url:'https://www.reddit.com/r/airdropalert/new/.rss',name:'r/airdropalert',src:'src-rd',cat:'airdrop',count:15},
+  // DeFi / Farming feeds
+  {id:'reddit_defi',url:'https://www.reddit.com/r/defi/new/.rss',name:'r/defi',src:'src-rd',cat:'defi',count:15},
+  // News
+  {id:'coindesk',url:'https://www.coindesk.com/arc/outboundfeeds/rss/',name:'CoinDesk',src:'src-cd',cat:'news',lang:'en',count:15},
+  {id:'cointelegraph',url:'https://cointelegraph.com/rss',name:'CoinTelegraph',src:'src-ct',cat:'news',lang:'en',count:12},
+  {id:'blockmedia',url:'https://www.blockmedia.co.kr/feed',name:'블록미디어',src:'src-bm',cat:'news',lang:'kr',count:12},
+];
+
+const COINS=[{id:'bitcoin',s:'BTC',i:'₿'},{id:'ethereum',s:'ETH',i:'Ξ'},{id:'solana',s:'SOL',i:'◎'},{id:'binancecoin',s:'BNB',i:'◆'},{id:'ripple',s:'XRP',i:'✕'},{id:'sui',s:'SUI',i:'〰'},{id:'avalanche-2',s:'AVAX',i:'▲'},{id:'the-open-network',s:'TON',i:'💎'},{id:'hyperliquid',s:'HYPE',i:'⚡'},{id:'dogecoin',s:'DOGE',i:'🐶'}];
+const SOC={e:[{n:'Binance',h:'@binance',e:'💛',t:'CEX',u:'https://x.com/binance'},{n:'Upbit',h:'@Official_Upbit',e:'🔵',t:'KR',u:'https://x.com/Official_Upbit'},{n:'Hyperliquid',h:'@HyperliquidX',e:'⚡',t:'DEX',u:'https://x.com/HyperliquidX'},{n:'Jupiter',h:'@JupiterExchange',e:'🪐',t:'DEX',u:'https://x.com/JupiterExchange'}],a:[{n:'ZachXBT',h:'@zachxbt',e:'🔍',t:'Inv.',u:'https://x.com/zachxbt'},{n:'DefiIgnas',h:'@DefiIgnas',e:'🧪',t:'DeFi',u:'https://x.com/DefiIgnas'},{n:'Pentoshi',h:'@Pentosh1',e:'🐂',t:'Trader',u:'https://x.com/Pentosh1'},{n:'CryptoKoryo',h:'@CryptoKoryo',e:'📈',t:'Data',u:'https://x.com/CryptoKoryo'}],p:[{n:'Ethereum',h:'@ethereum',e:'Ξ',t:'L1',u:'https://x.com/ethereum'},{n:'Solana',h:'@solana',e:'◎',t:'L1',u:'https://x.com/solana'},{n:'Base',h:'@base',e:'🔵',t:'L2',u:'https://x.com/base'},{n:'LayerZero',h:'@LayerZero_Core',e:'🌐',t:'Infra',u:'https://x.com/LayerZero_Core'},{n:'Monad',h:'@monad_xyz',e:'🟣',t:'L1',u:'https://x.com/monad_xyz'}],k:[{n:'Nasun',h:'@Nasun_io',e:'🇰🇷',t:'L1',u:'https://x.com/Nasun_io'},{n:'Hashed',h:'@HashGlobal',e:'🏢',t:'VC',u:'https://x.com/HashGlobal'}]};
+
+let apiKey='',pInt=null,allFeeds=[]; // allFeeds: unified feed store
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded',()=>{
+    // Tabs
+    document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.sec').forEach(x=>x.classList.remove('on'));t.classList.add('on');document.getElementById('s-'+t.dataset.t)?.classList.add('on');}));
+    // API
+    try{apiKey=localStorage.getItem('cg_key')||'';}catch(e){}
+    if(!apiKey)setTimeout(openM,600);
+    // Ticker
+    document.getElementById('ticker').innerHTML=COINS.map(c=>`<div class="tk" id="tk-${c.id}"><div class="tk-top"><span class="tk-ic">${c.i}</span><span class="tk-s">${c.s}</span></div><div class="tk-p"><div class="tk-ld" style="width:60px"></div></div><div class="tk-c" style="height:10px"></div></div>`).join('');
+    fetchP();if(apiKey)startLoop();
+    // Social
+    const rs=(i,id)=>{document.getElementById(id).innerHTML=i.map(s=>`<a href="${s.u}" target="_blank" class="soc"><div class="soc-a">${s.e}</div><div style="flex:1;min-width:0"><div class="soc-n">${s.n}</div><div class="soc-h">${s.h}</div></div><span class="soc-tg">${s.t}</span></a>`).join('');};
+    rs(SOC.e,'sE');rs(SOC.a,'sA');rs(SOC.p,'sP');rs(SOC.k,'sK');
+    // Filters
+    document.querySelectorAll('[data-sf]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-sf]').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderDash(b.dataset.sf);}));
+    document.querySelectorAll('[data-df]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-df]').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderDropFeed(b.dataset.df);}));
+    document.querySelectorAll('.nt').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.nt').forEach(x=>x.classList.remove('on'));t.classList.add('on');renderNewsFull(t.dataset.ns);}));
+    // FETCH ALL FEEDS
+    fetchAllFeeds();
+});
+
+function switchTab(n){document.querySelector(`[data-t="${n}"]`)?.click();}
+function openM(){document.getElementById('modal').classList.add('on');}
+function closeM(){document.getElementById('modal').classList.remove('on');}
+function saveK(){const v=document.getElementById('kIn').value.trim();if(!v||v.includes('•'))return closeM();apiKey=v;try{localStorage.setItem('cg_key',v);}catch(e){}closeM();fetchP();startLoop();}
+
+// ===== PRICES =====
+async function fetchP(){
+    try{const ids=COINS.map(c=>c.id).join(',');const h=apiKey?{'x-cg-demo-api-key':apiKey}:{};
+    const r=await fetch(`${CG}/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`,{headers:h});
+    if(r.status===429){uSt('⏳');return;}if(!r.ok)throw 0;const d=await r.json();
+    COINS.forEach(c=>{const el=document.getElementById(`tk-${c.id}`);if(!el||!d[c.id])return;const p=d[c.id].usd,ch=d[c.id].usd_24h_change||0,up=ch>=0;
+    el.querySelector('.tk-p').textContent=p>=100?'$'+p.toLocaleString('en',{maximumFractionDigits:0}):p>=1?'$'+p.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2}):'$'+p.toLocaleString('en',{minimumFractionDigits:4,maximumFractionDigits:4});
+    const ce=el.querySelector('.tk-c');ce.textContent=(up?'+':'')+ch.toFixed(2)+'%';ce.className='tk-c '+(up?'up':'dn');});uSt('LIVE');}
+    catch(e){if(!apiKey){uSt('🔑');openM();}else uSt('❌');}
+}
+function startLoop(){if(pInt)clearInterval(pInt);pInt=setInterval(fetchP,RF);}
+function uSt(s){const t=new Date().toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit',second:'2-digit'});document.getElementById('st').textContent=s==='LIVE'?`🟢 ${t}`:s;}
+
+// ===== FEED AGGREGATOR =====
+async function fetchAllFeeds(){
+    const promises=SOURCES.map(async src=>{
+        try{
+            const r=await fetch(`${R2J}?rss_url=${encodeURIComponent(src.url)}&count=${src.count}`);
+            if(!r.ok)return[];
+            const d=await r.json();
+            return(d.items||[]).map(it=>{
+                // Clean description
+                const tmp=document.createElement('div');tmp.innerHTML=it.description||it.content||'';
+                const desc=tmp.textContent?.substring(0,300)||'';
+                return{
+                    title:it.title,
+                    link:it.link,
+                    desc,
+                    date:new Date(it.pubDate),
+                    source:src.name,
+                    srcClass:src.src,
+                    cat:src.cat,
+                    lang:src.lang||'en',
+                    sourceId:src.id
+                };
+            });
+        }catch(e){return[];}
+    });
+    const results=await Promise.all(promises);
+    allFeeds=results.flat().sort((a,b)=>b.date-a.date);
+
+    // Deduplicate by title similarity
+    const seen=new Set();
+    allFeeds=allFeeds.filter(f=>{
+        const key=f.title.toLowerCase().replace(/[^a-z0-9가-힣]/g,'').substring(0,40);
+        if(seen.has(key))return false;
+        seen.add(key);return true;
+    });
+
+    // Render all views
+    renderDash('all');
+    renderFarmFeed();
+    renderDropFeed('all');
+    renderNewsFull('all');
+    renderDashNews();
+}
+
+function feedCard(f){
+    const dateStr=f.date.toLocaleDateString('en',{month:'short',day:'numeric'});
+    return`<div class="fc"><h4><a href="${f.link}" target="_blank">${f.title}</a></h4><p>${f.desc}</p><div class="fc-m"><span class="fc-src ${f.srcClass}">${f.source}</span><span>${dateStr}</span></div></div>`;
+}
+
+function renderDash(filter){
+    const items=allFeeds.filter(f=>f.cat==='airdrop'||f.cat==='defi');
+    const filtered=filter==='all'?items:filter==='airdropalert'?items.filter(f=>f.sourceId==='airdropalert'):filter==='reddit'?items.filter(f=>f.sourceId.startsWith('reddit')):items.filter(f=>f.cat==='defi');
+    document.getElementById('dashFeed').innerHTML=filtered.length?'<div class="grid g2">'+filtered.slice(0,20).map(feedCard).join('')+'</div>':'<div class="ld">피드 없음</div>';
+    document.getElementById('dashCnt').textContent=filtered.length+' items';
+}
+
+function renderFarmFeed(){
+    const items=allFeeds.filter(f=>f.cat==='defi'||f.sourceId==='airdropalert');
+    // farming-related keywords
+    const farmKw=['farm','yield','lp','liquidity','stake','point','reward','earn','defi','swap','bridge','야핑','파밍','포인트'];
+    const farmItems=items.filter(f=>{const t=(f.title+' '+f.desc).toLowerCase();return farmKw.some(k=>t.includes(k));});
+    const show=farmItems.length>5?farmItems:items.slice(0,20);
+    document.getElementById('farmFeed').innerHTML=show.length?'<div class="grid g2">'+show.slice(0,20).map(feedCard).join('')+'</div>':'<div class="ld">피드 없음</div>';
+    document.getElementById('farmCnt').textContent=show.length+' items';
+}
+
+function renderDropFeed(filter){
+    const items=allFeeds.filter(f=>f.cat==='airdrop');
+    const filtered=filter==='all'?items:filter==='airdropalert'?items.filter(f=>f.sourceId==='airdropalert'):items.filter(f=>f.sourceId.startsWith('reddit'));
+    document.getElementById('dropFeed').innerHTML=filtered.length?'<div class="grid g2">'+filtered.slice(0,30).map(feedCard).join('')+'</div>':'<div class="ld">피드 없음</div>';
+    document.getElementById('dropCnt').textContent=filtered.length+' items';
+}
+
+function renderNewsFull(lang){
+    const items=allFeeds.filter(f=>f.cat==='news');
+    const filtered=lang==='all'?items:items.filter(f=>f.lang===lang);
+    document.getElementById('newsFull').innerHTML=filtered.length?filtered.slice(0,30).map(f=>{
+        const d=f.date;return`<div class="ni"><div class="ni-t">${d.toLocaleDateString('en',{month:'short',day:'numeric'})}<br>${d.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false})}</div><div class="ni-b"><div class="ni-h"><a href="${f.link}" target="_blank">${f.title}</a></div><div class="ni-s">${f.source}</div></div></div>`;
+    }).join(''):'<div class="ld">No news</div>';
+}
+
+function renderDashNews(){
+    const items=allFeeds.filter(f=>f.cat==='news').slice(0,5);
+    document.getElementById('dashNews').innerHTML=items.length?items.map(f=>`<div class="ni"><div class="ni-t">${f.date.toLocaleDateString('en',{month:'short',day:'numeric'})}</div><div class="ni-b"><div class="ni-h"><a href="${f.link}" target="_blank">${f.title}</a></div><div class="ni-s">${f.source}</div></div></div>`).join(''):'<div class="ld">Loading...</div>';
+}
+</script>
+</body>
+</html>
