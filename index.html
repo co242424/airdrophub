@@ -372,28 +372,40 @@ async function loadPrices(){
 // News — RSS2JSON proxy (free, no key, CORS-safe)
 async function loadNews(){
   st.n='ld';showSt();
-  const feeds=[
-    'https://cointelegraph.com/rss',
-    'https://decrypt.co/feed',
-  ];
   news=[];
-  for(const feed of feeds){
+  const MAIN='https://free-crypto-news.vercel.app';
+  const MIRROR='https://nirholas.github.io/free-crypto-news';
+  // Try main API first, then failsafe mirror
+  const urls=[
+    `${MAIN}/api/news?limit=20`,
+    `${MAIN}/api/breaking?limit=10`,
+    `${MIRROR}/cache/latest.json`
+  ];
+  for(const url of urls){
     try{
-      const r=await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed)}&count=8`);
+      const ctrl=new AbortController();
+      setTimeout(()=>ctrl.abort(),6000);
+      const r=await fetch(url,{signal:ctrl.signal});
       if(!r.ok)continue;
       const d=await r.json();
-      if(d.items) news.push(...d.items.map(x=>({title:x.title,link:x.link,pubDate:x.pubDate,source:d.feed?.title||'Crypto',desc:x.description?.replace(/<[^>]*>/g,'').slice(0,120)||''})));
-    }catch(e){console.warn('News feed error:',e)}
+      const articles=d.articles||d.items||[];
+      if(articles.length>0){
+        news=articles.map(a=>({
+          title:a.title||'',
+          link:a.link||a.url||'#',
+          pubDate:a.pubDate||a.pub_date||a.published_at||new Date().toISOString(),
+          source:a.source||'Crypto',
+          desc:(a.description||'').replace(/<[^>]*>/g,'').slice(0,140)
+        }));
+        news.sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
+        st.n='ok';
+        break;
+      }
+    }catch(e){console.warn('News fetch:',e)}
   }
-  if(news.length>0){
-    news.sort((a,b)=>new Date(b.pubDate)-new Date(a.pubDate));
-    st.n='ok';
-  } else {
+  if(!news.length){
     st.n='er';
-    news=[
-      {title:'뉴스 피드 연결 대기 중... (배포 후 자동 작동)',pubDate:new Date().toISOString(),source:'AirdropHub',link:'#',desc:''},
-      {title:'CoinTelegraph & Decrypt RSS 피드를 통해 실시간 뉴스 제공',pubDate:new Date().toISOString(),source:'Info',link:'#',desc:''},
-    ];
+    news=[{title:'뉴스 로딩 중... 잠시 후 새로고침 해주세요',pubDate:new Date().toISOString(),source:'AirdropHub',link:'#',desc:''}];
   }
   renderNews();showSt();
 }
