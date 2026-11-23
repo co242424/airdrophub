@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AdropHub — 에어드롭 · 야핑 · 테스트넷 총집합 | Airdrop Farming Aggregator</title>
-<meta name="description" content="에어드롭, 야핑, 테스트넷 정보 자동 수집. AirdropAlert, Reddit, DeFiLlama 등 8개+ 소스에서 실시간 피드.">
+<meta name="description" content="에어드롭, 야핑, 테스트넷 정보 자동 수집. AirdropAlert · Airdrops.io · CoinDesk · CoinTelegraph · 블록미디어 5개 소스를 30분마다 갱신.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://adrophub.netlify.app/">
 <meta property="og:title" content="AdropHub — Airdrop & Farming Aggregator">
-<meta property="og:description" content="8+ sources auto-aggregated: AirdropAlert, Reddit, DeFiLlama, CoinDesk and more.">
+<meta property="og:description" content="5 sources auto-aggregated every 30 minutes: AirdropAlert, Airdrops.io, CoinDesk, CoinTelegraph, Blockmedia.">
 <meta property="og:type" content="website">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"AdropHub","url":"https://adrophub.netlify.app/"}</script>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Pretendard:wght@400;500;600;700;900&display=swap" rel="stylesheet">
@@ -22,7 +22,6 @@
 .hdr-r{display:flex;align-items:center;gap:6px}
 .dot{width:5px;height:5px;border-radius:50%;background:var(--g);animation:bl 2s infinite}@keyframes bl{50%{opacity:.3}}
 #st{font-family:var(--mono);font-size:.6rem;color:var(--t3)}
-.sbtn{padding:3px 7px;border-radius:3px;font-size:.6rem;font-family:var(--mono);background:var(--bg3);border:1px solid var(--b2);color:var(--t3);cursor:pointer}.sbtn:hover{border-color:var(--g);color:var(--g)}
 .lsel{font-size:.6rem;background:var(--bg3);border:1px solid var(--b2);color:var(--t2);border-radius:3px;padding:2px 5px;font-family:var(--mono);outline:none}
 .tabs{display:flex;padding:0 14px;max-width:1440px;margin:0 auto;background:var(--bg0);border-bottom:1px solid var(--b1);overflow-x:auto;gap:1px}
 .tab{padding:8px 13px;font-size:.75rem;font-weight:500;color:var(--t3);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;user-select:none}.tab:hover{color:var(--t2)}.tab.on{color:var(--g);border-color:var(--g)}
@@ -33,10 +32,6 @@
 .tk-top{display:flex;align-items:center;gap:4px;margin-bottom:3px}.tk-ic{font-size:.75rem;font-weight:700}.tk-s{font-family:var(--mono);font-weight:600;font-size:.72rem}.tk-n{font-size:.55rem;color:var(--t4);margin-left:auto}
 .tk-p{font-family:var(--mono);font-size:.9rem;font-weight:700}.tk-c{font-family:var(--mono);font-size:.65rem;font-weight:600}.tk-c.up{color:var(--g)}.tk-c.dn{color:var(--r)}
 .tk-ld{height:12px;border-radius:3px;background:linear-gradient(90deg,var(--bg3) 25%,var(--bg4) 50%,var(--bg3) 75%);background-size:200% 100%;animation:sh 1.2s infinite}@keyframes sh{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:300;align-items:center;justify-content:center}.modal-bg.on{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--b2);border-radius:12px;padding:22px;max-width:380px;width:90%}.modal h3{margin-bottom:5px;font-size:.9rem}.modal p{font-size:.75rem;color:var(--t2);margin-bottom:12px;line-height:1.5}
-.modal input{width:100%;padding:8px 10px;background:var(--bg3);border:1px solid var(--b2);border-radius:5px;color:var(--t1);font-family:var(--mono);font-size:.8rem;outline:none;margin-bottom:8px}.modal input:focus{border-color:var(--g)}
-.mbtn{display:flex;gap:6px;justify-content:flex-end}.mb{padding:6px 14px;border-radius:5px;font-weight:700;font-size:.78rem;cursor:pointer;border:none;font-family:var(--sans)}.ms{background:var(--g);color:#000}.mk{background:var(--bg4);color:var(--t3)}
 .st{font-size:.85rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}.st::before{content:'';width:3px;height:13px;background:linear-gradient(var(--g),var(--bl));border-radius:2px}.st .sub{font-size:.62rem;color:var(--t4);font-weight:400;margin-left:auto}
 .grid{display:grid;gap:8px;margin-bottom:18px}.g2{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}.g3{grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
 /* Feed cards */
@@ -75,10 +70,9 @@
 </head>
 <body>
 <header class="hdr"><div class="hdr-in">
-<div class="logo">AdropHub<b>v8 FEED AGGREGATOR</b></div>
-<div class="hdr-r"><select class="lsel" onchange="document.documentElement.lang=this.value"><option value="ko">🇰🇷</option><option value="en">🇺🇸</option><option value="ja">🇯🇵</option><option value="zh">🇨🇳</option></select><div class="dot"></div><span id="st">...</span><button class="sbtn" onclick="openM()">🔑</button></div>
+<div class="logo">AdropHub<b>v9 AUTO 30m</b></div>
+<div class="hdr-r"><select class="lsel" onchange="document.documentElement.lang=this.value"><option value="ko">🇰🇷</option><option value="en">🇺🇸</option><option value="ja">🇯🇵</option><option value="zh">🇨🇳</option></select><div class="dot"></div><span id="st">...</span></div>
 </div></header>
-<div class="modal-bg" id="modal"><div class="modal"><h3>🔑 CoinGecko API</h3><p>무료 Demo 키 필요. <a href="https://www.coingecko.com/en/api/pricing" target="_blank" style="color:var(--g)">무료 발급 →</a><br>localStorage에만 저장.</p><input id="kIn" type="password" placeholder="CG-xxx" autocomplete="off"><div class="mbtn"><button class="mb mk" onclick="closeM()">닫기</button><button class="mb ms" onclick="saveK()">저장</button></div></div></div>
 <nav class="tabs">
 <div class="tab on" data-t="dash">📊 대시보드</div>
 <div class="tab" data-t="farm">🌾 야핑</div>
@@ -94,8 +88,8 @@
 <!-- DASHBOARD -->
 <div class="sec on" id="s-dash">
 <div class="ticker" id="ticker"></div>
-<div class="st">🔴 실시간 에어드롭 피드 <span class="sub">8개 소스 자동 수집</span></div>
-<div class="fbar"><div class="fb on" data-sf="all">All</div><div class="fb" data-sf="airdropalert">AirdropAlert</div><div class="fb" data-sf="reddit">Reddit</div><div class="fb" data-sf="defi">DeFi</div><span class="feed-cnt" id="dashCnt"></span></div>
+<div class="st">🔴 에어드롭 피드 <span class="sub" id="srcLine">불러오는 중</span></div>
+<div class="fbar"><div class="fb on" data-sf="all">All</div><div class="fb" data-sf="airdropalert">AirdropAlert</div><div class="fb" data-sf="airdropsio">Airdrops.io</div><span class="feed-cnt" id="dashCnt"></span></div>
 <div id="dashFeed" class="ld"><span class="ld-spin"></span>피드 수집중...</div>
 <div class="ad-slot" style="margin-top:14px">📢 광고 영역</div>
 <div class="st">📰 뉴스 <span class="sub" style="cursor:pointer" onclick="switchTab('news')">더보기 →</span></div>
@@ -134,7 +128,7 @@
 <!-- AIRDROPS -->
 <div class="sec" id="s-drops">
 <div class="st">🪂 에어드롭 & 테스트넷 피드 <span class="sub" id="dropCnt"></span></div>
-<div class="fbar"><div class="fb on" data-df="all">All</div><div class="fb" data-df="airdropalert">AirdropAlert</div><div class="fb" data-df="reddit">Reddit</div></div>
+<div class="fbar"><div class="fb on" data-df="all">All</div><div class="fb" data-df="airdropalert">AirdropAlert</div><div class="fb" data-df="airdropsio">Airdrops.io</div></div>
 <div id="dropFeed" class="ld"><span class="ld-spin"></span>피드 수집중...</div>
 <div class="ad-slot">📢 광고 영역</div>
 <div class="st">📋 에어드롭 트래커 & 커뮤니티</div>
@@ -163,7 +157,7 @@
 <li>X, Discord, Telegram 계정</li>
 </ol></div>
 <div class="info-box"><h3 style="color:var(--y)">🧪 테스트넷 (무료!)</h3><p>메인넷 전 테스트. 가스비 0원.</p><ol class="gs"><li>테스트넷 사이트 접속</li><li>Faucet에서 테스트 토큰</li><li>스왑/브릿지/스테이킹 테스트</li><li>피드백 (Discord)</li><li>주 2~3회 꾸준히</li></ol>
-<p style="font-size:.73rem;color:var(--t3);margin-top:6px">추천: <a href="https://monad.xyz/" target="_blank" style="color:var(--y)">Monad</a> · <a href="https://berachain.com/" target="_blank" style="color:var(--y)">Berachain</a> · <a href="https://www.inco.org/" target="_blank" style="color:var(--y)">Inco</a></p></div>
+<p style="font-size:.73rem;color:var(--t3);margin-top:6px">고정 추천 목록은 몇 달이면 낡는다(테스트넷이 메인넷으로 넘어가 버린다). 지금 도는 테스트넷은 🪂 에어드롭 탭에서 제목에 testnet이 들어간 항목으로 확인해라.</p></div>
 <div class="info-box"><h3 style="color:var(--o)">🌾 야핑 (소액 가스비)</h3><ol class="gs"><li>앱 → 지갑 연결</li><li>소액 스왑/브릿지</li><li>LP or 스테이킹</li><li>포인트 대시보드 확인</li><li>매주 꾸준히</li></ol></div>
 <div class="info-box"><h3 style="color:var(--r)">⚠️ 주의</h3><ul><li>시드구/비밀키 입력 = 스캠 100%</li><li><a href="https://revoke.cash/" target="_blank" style="color:var(--g)">Revoke.cash</a>로 어프루벌 해지</li><li>에어드롭 전용 지갑 사용</li><li>시빌 = 차단</li><li>"입금하면 에어드롭" = 스캠</li></ul></div>
 </div>
@@ -201,40 +195,24 @@
 </div>
 </div>
 <div class="ad-slot" style="max-width:1440px;margin:0 auto;border-radius:0">📢 광고 하단</div>
-<footer class="ftr">AdropHub v8 Feed Aggregator | Sources: AirdropAlert · Reddit · CoinDesk · CoinTelegraph · 블록미디어 · DeFiLlama | ⚠️ DYOR</footer>
+<footer class="ftr">AdropHub v9 | Sources: AirdropAlert · Airdrops.io · CoinDesk · CoinTelegraph · 블록미디어 (GitHub Actions 30분 주기) | ⚠️ DYOR</footer>
 
 <script>
-const CG='https://api.coingecko.com/api/v3',R2J='https://api.rss2json.com/v1/api.json',RF=30000;
-
-// ===== ALL FEED SOURCES =====
-const SOURCES=[
-  // Airdrop feeds
-  {id:'airdropalert',url:'https://airdropalert.com/feed/rssfeed',name:'AirdropAlert',src:'src-aa',cat:'airdrop',count:25},
-  {id:'reddit_ca',url:'https://www.reddit.com/r/CryptoAirdrops/new/.rss',name:'r/CryptoAirdrops',src:'src-rd',cat:'airdrop',count:20},
-  {id:'reddit_aa',url:'https://www.reddit.com/r/airdropalert/new/.rss',name:'r/airdropalert',src:'src-rd',cat:'airdrop',count:15},
-  // DeFi / Farming feeds
-  {id:'reddit_defi',url:'https://www.reddit.com/r/defi/new/.rss',name:'r/defi',src:'src-rd',cat:'defi',count:15},
-  // News
-  {id:'coindesk',url:'https://www.coindesk.com/arc/outboundfeeds/rss/',name:'CoinDesk',src:'src-cd',cat:'news',lang:'en',count:15},
-  {id:'cointelegraph',url:'https://cointelegraph.com/rss',name:'CoinTelegraph',src:'src-ct',cat:'news',lang:'en',count:12},
-  {id:'blockmedia',url:'https://www.blockmedia.co.kr/feed',name:'블록미디어',src:'src-bm',cat:'news',lang:'kr',count:12},
-];
+const CG='https://api.coingecko.com/api/v3',DATA='https://raw.githubusercontent.com/co242424/airdrophub/main/data.json',RF=60000,FL=600000;
+const SRCC={'AirdropAlert':'src-aa','Airdrops.io':'src-dl','CoinDesk':'src-cd','CoinTelegraph':'src-ct','블록미디어':'src-bm'};
 
 const COINS=[{id:'bitcoin',s:'BTC',i:'₿'},{id:'ethereum',s:'ETH',i:'Ξ'},{id:'solana',s:'SOL',i:'◎'},{id:'binancecoin',s:'BNB',i:'◆'},{id:'ripple',s:'XRP',i:'✕'},{id:'sui',s:'SUI',i:'〰'},{id:'avalanche-2',s:'AVAX',i:'▲'},{id:'the-open-network',s:'TON',i:'💎'},{id:'hyperliquid',s:'HYPE',i:'⚡'},{id:'dogecoin',s:'DOGE',i:'🐶'}];
 const SOC={e:[{n:'Binance',h:'@binance',e:'💛',t:'CEX',u:'https://x.com/binance'},{n:'Upbit',h:'@Official_Upbit',e:'🔵',t:'KR',u:'https://x.com/Official_Upbit'},{n:'Hyperliquid',h:'@HyperliquidX',e:'⚡',t:'DEX',u:'https://x.com/HyperliquidX'},{n:'Jupiter',h:'@JupiterExchange',e:'🪐',t:'DEX',u:'https://x.com/JupiterExchange'}],a:[{n:'ZachXBT',h:'@zachxbt',e:'🔍',t:'Inv.',u:'https://x.com/zachxbt'},{n:'DefiIgnas',h:'@DefiIgnas',e:'🧪',t:'DeFi',u:'https://x.com/DefiIgnas'},{n:'Pentoshi',h:'@Pentosh1',e:'🐂',t:'Trader',u:'https://x.com/Pentosh1'},{n:'CryptoKoryo',h:'@CryptoKoryo',e:'📈',t:'Data',u:'https://x.com/CryptoKoryo'}],p:[{n:'Ethereum',h:'@ethereum',e:'Ξ',t:'L1',u:'https://x.com/ethereum'},{n:'Solana',h:'@solana',e:'◎',t:'L1',u:'https://x.com/solana'},{n:'Base',h:'@base',e:'🔵',t:'L2',u:'https://x.com/base'},{n:'LayerZero',h:'@LayerZero_Core',e:'🌐',t:'Infra',u:'https://x.com/LayerZero_Core'},{n:'Monad',h:'@monad_xyz',e:'🟣',t:'L1',u:'https://x.com/monad_xyz'}],k:[{n:'Nasun',h:'@Nasun_io',e:'🇰🇷',t:'L1',u:'https://x.com/Nasun_io'},{n:'Hashed',h:'@HashGlobal',e:'🏢',t:'VC',u:'https://x.com/HashGlobal'}]};
 
-let apiKey='',pInt=null,allFeeds=[]; // allFeeds: unified feed store
+let pInt=null,fInt=null,allFeeds=[],srcHealth=[],dataAt=0;
 
 // ===== INIT =====
 document.addEventListener('DOMContentLoaded',()=>{
     // Tabs
     document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));document.querySelectorAll('.sec').forEach(x=>x.classList.remove('on'));t.classList.add('on');document.getElementById('s-'+t.dataset.t)?.classList.add('on');}));
-    // API
-    try{apiKey=localStorage.getItem('cg_key')||'';}catch(e){}
-    if(!apiKey)setTimeout(openM,600);
     // Ticker
     document.getElementById('ticker').innerHTML=COINS.map(c=>`<div class="tk" id="tk-${c.id}"><div class="tk-top"><span class="tk-ic">${c.i}</span><span class="tk-s">${c.s}</span></div><div class="tk-p"><div class="tk-ld" style="width:60px"></div></div><div class="tk-c" style="height:10px"></div></div>`).join('');
-    fetchP();if(apiKey)startLoop();
+    fetchP();startLoop();setInterval(renderStatus,30000);
     // Social
     const rs=(i,id)=>{document.getElementById(id).innerHTML=i.map(s=>`<a href="${s.u}" target="_blank" class="soc"><div class="soc-a">${s.e}</div><div style="flex:1;min-width:0"><div class="soc-n">${s.n}</div><div class="soc-h">${s.h}</div></div><span class="soc-tg">${s.t}</span></a>`).join('');};
     rs(SOC.e,'sE');rs(SOC.a,'sA');rs(SOC.p,'sP');rs(SOC.k,'sK');
@@ -242,86 +220,73 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.querySelectorAll('[data-sf]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-sf]').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderDash(b.dataset.sf);}));
     document.querySelectorAll('[data-df]').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('[data-df]').forEach(x=>x.classList.remove('on'));b.classList.add('on');renderDropFeed(b.dataset.df);}));
     document.querySelectorAll('.nt').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.nt').forEach(x=>x.classList.remove('on'));t.classList.add('on');renderNewsFull(t.dataset.ns);}));
-    // FETCH ALL FEEDS
-    fetchAllFeeds();
+    // FEED DATA (GitHub Actions가 30분마다 갱신)
+    loadData();fInt=setInterval(loadData,FL);
 });
 
 function switchTab(n){document.querySelector(`[data-t="${n}"]`)?.click();}
-function openM(){document.getElementById('modal').classList.add('on');}
-function closeM(){document.getElementById('modal').classList.remove('on');}
-function saveK(){const v=document.getElementById('kIn').value.trim();if(!v||v.includes('•'))return closeM();apiKey=v;try{localStorage.setItem('cg_key',v);}catch(e){}closeM();fetchP();startLoop();}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function safeUrl(u){return /^https?:\/\//i.test(String(u||''))?esc(u):'#';}
+function curFilter(attr){const el=document.querySelector(`[data-${attr}].on`);return el?el.dataset[attr]:'all';}
 
 // ===== PRICES =====
 async function fetchP(){
-    try{const ids=COINS.map(c=>c.id).join(',');const h=apiKey?{'x-cg-demo-api-key':apiKey}:{};
-    const r=await fetch(`${CG}/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`,{headers:h});
-    if(r.status===429){uSt('⏳');return;}if(!r.ok)throw 0;const d=await r.json();
+    try{const ids=COINS.map(c=>c.id).join(',');
+    const r=await fetch(`${CG}/simple/price?ids=${ids}&vs_currencies=usd&include_24hr_change=true`);
+    if(!r.ok)throw 0;const d=await r.json();
     COINS.forEach(c=>{const el=document.getElementById(`tk-${c.id}`);if(!el||!d[c.id])return;const p=d[c.id].usd,ch=d[c.id].usd_24h_change||0,up=ch>=0;
     el.querySelector('.tk-p').textContent=p>=100?'$'+p.toLocaleString('en',{maximumFractionDigits:0}):p>=1?'$'+p.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2}):'$'+p.toLocaleString('en',{minimumFractionDigits:4,maximumFractionDigits:4});
-    const ce=el.querySelector('.tk-c');ce.textContent=(up?'+':'')+ch.toFixed(2)+'%';ce.className='tk-c '+(up?'up':'dn');});uSt('LIVE');}
-    catch(e){if(!apiKey){uSt('🔑');openM();}else uSt('❌');}
+    const ce=el.querySelector('.tk-c');ce.textContent=(up?'+':'')+ch.toFixed(2)+'%';ce.className='tk-c '+(up?'up':'dn');});}
+    catch(e){COINS.forEach(c=>{const el=document.getElementById(`tk-${c.id}`);if(el)el.querySelector('.tk-p').textContent='—';});}
 }
 function startLoop(){if(pInt)clearInterval(pInt);pInt=setInterval(fetchP,RF);}
-function uSt(s){const t=new Date().toLocaleTimeString('ko',{hour:'2-digit',minute:'2-digit',second:'2-digit'});document.getElementById('st').textContent=s==='LIVE'?`🟢 ${t}`:s;}
+function renderStatus(){
+    const el=document.getElementById('st');if(!el)return;
+    if(!dataAt){el.textContent='⏳ 피드 불러오는 중';el.style.color='var(--t3)';return;}
+    const min=Math.floor((Date.now()-dataAt)/60000),ok=srcHealth.filter(s=>s.ok).length;
+    const bad=min>180||(srcHealth.length&&!ok);
+    el.textContent=`${min<=45?'🟢':min<=180?'🟠':'🔴'} ${min<1?'방금':min+'분 전'} 갱신 · ${ok}/${srcHealth.length} 소스`;
+    el.style.color=bad?(min>180?'var(--r)':'var(--y)'):'var(--g)';
+}
 
-// ===== FEED AGGREGATOR =====
-async function fetchAllFeeds(){
-    const promises=SOURCES.map(async src=>{
-        try{
-            const r=await fetch(`${R2J}?rss_url=${encodeURIComponent(src.url)}&count=${src.count}`);
-            if(!r.ok)return[];
-            const d=await r.json();
-            return(d.items||[]).map(it=>{
-                // Clean description
-                const tmp=document.createElement('div');tmp.innerHTML=it.description||it.content||'';
-                const desc=tmp.textContent?.substring(0,300)||'';
-                return{
-                    title:it.title,
-                    link:it.link,
-                    desc,
-                    date:new Date(it.pubDate),
-                    source:src.name,
-                    srcClass:src.src,
-                    cat:src.cat,
-                    lang:src.lang||'en',
-                    sourceId:src.id
-                };
-            });
-        }catch(e){return[];}
-    });
-    const results=await Promise.all(promises);
-    allFeeds=results.flat().sort((a,b)=>b.date-a.date);
-
-    // Deduplicate by title similarity
-    const seen=new Set();
-    allFeeds=allFeeds.filter(f=>{
-        const key=f.title.toLowerCase().replace(/[^a-z0-9가-힣]/g,'').substring(0,40);
-        if(seen.has(key))return false;
-        seen.add(key);return true;
-    });
-
-    // Render all views
-    renderDash('all');
-    renderFarmFeed();
-    renderDropFeed('all');
-    renderNewsFull('all');
-    renderDashNews();
+// ===== FEED DATA =====
+async function loadData(){
+    try{
+        const r=await fetch(`${DATA}?b=${Math.floor(Date.now()/300000)}`);
+        if(!r.ok)throw 0;
+        const d=await r.json();
+        allFeeds=(d.items||[]).map(i=>({...i,srcClass:SRCC[i.source]||'src-aa',date:i.date?new Date(i.date):new Date(0)}));
+        srcHealth=d.sources||[];
+        dataAt=d.generated_at?new Date(d.generated_at).getTime():Date.now();
+        const src=document.getElementById('srcLine');
+        if(src)src.textContent=srcHealth.map(s=>s.name+(s.ok?'':' ✕')).join(' · ');
+        renderDash(curFilter('sf'));
+        renderFarmFeed();
+        renderDropFeed(curFilter('df'));
+        renderNewsFull(curFilter('ns'));
+        renderDashNews();
+        renderStatus();
+    }catch(e){
+        const msg='<div class="ld">피드를 불러오지 못했습니다. 잠시 후 새로고침해 주세요.</div>';
+        ['dashFeed','dropFeed','farmFeed','dashNews','newsFull'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=msg;});
+        if(!dataAt){const el=document.getElementById('st');el.textContent='🔴 피드 연결 실패';el.style.color='var(--r)';}
+    }
 }
 
 function feedCard(f){
     const dateStr=f.date.toLocaleDateString('en',{month:'short',day:'numeric'});
-    return`<div class="fc"><h4><a href="${f.link}" target="_blank">${f.title}</a></h4><p>${f.desc}</p><div class="fc-m"><span class="fc-src ${f.srcClass}">${f.source}</span><span>${dateStr}</span></div></div>`;
+    return`<div class="fc"><h4><a href="${safeUrl(f.link)}" target="_blank" rel="noopener">${esc(f.title)}</a></h4><p>${esc(f.desc)}</p><div class="fc-m"><span class="fc-src ${esc(f.srcClass)}">${esc(f.source)}</span><span>${dateStr}</span></div></div>`;
 }
 
 function renderDash(filter){
     const items=allFeeds.filter(f=>f.cat==='airdrop'||f.cat==='defi');
-    const filtered=filter==='all'?items:filter==='airdropalert'?items.filter(f=>f.sourceId==='airdropalert'):filter==='reddit'?items.filter(f=>f.sourceId.startsWith('reddit')):items.filter(f=>f.cat==='defi');
+    const filtered=filter==='all'?items:items.filter(f=>f.sourceId===filter);
     document.getElementById('dashFeed').innerHTML=filtered.length?'<div class="grid g2">'+filtered.slice(0,20).map(feedCard).join('')+'</div>':'<div class="ld">피드 없음</div>';
     document.getElementById('dashCnt').textContent=filtered.length+' items';
 }
 
 function renderFarmFeed(){
-    const items=allFeeds.filter(f=>f.cat==='defi'||f.sourceId==='airdropalert');
+    const items=allFeeds.filter(f=>f.cat==='airdrop');
     // farming-related keywords
     const farmKw=['farm','yield','lp','liquidity','stake','point','reward','earn','defi','swap','bridge','야핑','파밍','포인트'];
     const farmItems=items.filter(f=>{const t=(f.title+' '+f.desc).toLowerCase();return farmKw.some(k=>t.includes(k));});
@@ -332,7 +297,7 @@ function renderFarmFeed(){
 
 function renderDropFeed(filter){
     const items=allFeeds.filter(f=>f.cat==='airdrop');
-    const filtered=filter==='all'?items:filter==='airdropalert'?items.filter(f=>f.sourceId==='airdropalert'):items.filter(f=>f.sourceId.startsWith('reddit'));
+    const filtered=filter==='all'?items:items.filter(f=>f.sourceId===filter);
     document.getElementById('dropFeed').innerHTML=filtered.length?'<div class="grid g2">'+filtered.slice(0,30).map(feedCard).join('')+'</div>':'<div class="ld">피드 없음</div>';
     document.getElementById('dropCnt').textContent=filtered.length+' items';
 }
@@ -341,13 +306,13 @@ function renderNewsFull(lang){
     const items=allFeeds.filter(f=>f.cat==='news');
     const filtered=lang==='all'?items:items.filter(f=>f.lang===lang);
     document.getElementById('newsFull').innerHTML=filtered.length?filtered.slice(0,30).map(f=>{
-        const d=f.date;return`<div class="ni"><div class="ni-t">${d.toLocaleDateString('en',{month:'short',day:'numeric'})}<br>${d.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false})}</div><div class="ni-b"><div class="ni-h"><a href="${f.link}" target="_blank">${f.title}</a></div><div class="ni-s">${f.source}</div></div></div>`;
+        const d=f.date;return`<div class="ni"><div class="ni-t">${d.toLocaleDateString('en',{month:'short',day:'numeric'})}<br>${d.toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false})}</div><div class="ni-b"><div class="ni-h"><a href="${safeUrl(f.link)}" target="_blank" rel="noopener">${esc(f.title)}</a></div><div class="ni-s">${esc(f.source)}</div></div></div>`;
     }).join(''):'<div class="ld">No news</div>';
 }
 
 function renderDashNews(){
     const items=allFeeds.filter(f=>f.cat==='news').slice(0,5);
-    document.getElementById('dashNews').innerHTML=items.length?items.map(f=>`<div class="ni"><div class="ni-t">${f.date.toLocaleDateString('en',{month:'short',day:'numeric'})}</div><div class="ni-b"><div class="ni-h"><a href="${f.link}" target="_blank">${f.title}</a></div><div class="ni-s">${f.source}</div></div></div>`).join(''):'<div class="ld">Loading...</div>';
+    document.getElementById('dashNews').innerHTML=items.length?items.map(f=>`<div class="ni"><div class="ni-t">${f.date.toLocaleDateString('en',{month:'short',day:'numeric'})}</div><div class="ni-b"><div class="ni-h"><a href="${safeUrl(f.link)}" target="_blank" rel="noopener">${esc(f.title)}</a></div><div class="ni-s">${esc(f.source)}</div></div></div>`).join(''):'<div class="ld">Loading...</div>';
 }
 </script>
 </body>
