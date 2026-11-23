@@ -86,7 +86,7 @@ def steps_of(body):
             block = body[head.end():heads[idx + 1].start() if idx + 1 < len(heads) else len(body)]
             break
     if not block:
-        block = "".join(re.findall(r"<ol[^>]*>.*?</ol>", body, re.S | re.I))
+        return []
 
     steps = []
     for raw in re.findall(r"<li[^>]*>(.*?)</li>", block, re.S | re.I)[:8]:
@@ -142,7 +142,7 @@ def grab(source):
     items = []
     for block in re.findall(r"<item>(.*?)</item>", body, re.S):
         title = re.search(r"<title>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</title>", block, re.S)
-        link = re.search(r"<link>(.*?)</link>", block, re.S)
+        link = re.search(r"<link>\s*(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?\s*</link>", block, re.S)
         date = re.search(r"<pubDate>(.*?)</pubDate>", block, re.S)
         content = re.search(r"<content:encoded>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</content:encoded>", block, re.S)
         desc = re.search(r"<description>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</description>", block, re.S)

@@ -52,9 +52,9 @@ button{font-family:inherit}
 .wrap{max-width:1180px;margin:0 auto;padding:20px 16px 44px}
 .sec{display:none}.sec.on{display:block;animation:fade .22s ease}
 @keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
-.shead{display:flex;align-items:baseline;gap:9px;margin:26px 0 12px}
+.shead{display:flex;align-items:baseline;gap:9px;margin:26px 0 12px;flex-wrap:wrap}
 .shead:first-child{margin-top:0}
-.shead h2{font-size:1.02rem;font-weight:700;letter-spacing:-.02em}
+.shead h2{font-size:1.02rem;font-weight:700;letter-spacing:-.02em;white-space:nowrap}
 .shead .hint{font-size:.7rem;color:var(--t3);font-weight:500}
 .shead .cnt{margin-left:auto;font-family:var(--mono);font-size:.68rem;color:var(--t3)}
 .shead .more{margin-left:auto;font-size:.72rem;font-weight:600;color:var(--acc2);cursor:pointer}
@@ -62,12 +62,12 @@ button{font-family:inherit}
 /* ticker */
 .ticker{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;scroll-snap-type:x proximity;scrollbar-width:none}
 .ticker::-webkit-scrollbar{display:none}
-.tk{flex:0 0 158px;scroll-snap-align:start;background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:14px;padding:10px 12px;transition:border-color .16s,transform .16s}
+.tk{flex:0 0 164px;scroll-snap-align:start;background:linear-gradient(180deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:14px;padding:10px 12px;transition:border-color .16s,transform .16s}
 .tk:hover{border-color:var(--line2);transform:translateY(-1px)}
 .tk-r1{display:flex;align-items:center;gap:6px;margin-bottom:5px}
 .tk-ic{font-size:.8rem;line-height:1}
 .tk-s{font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.02em}
-.tk-n{font-size:.58rem;color:var(--t3);margin-left:auto;max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tk-n{font-size:.58rem;color:var(--t3);margin-left:auto;max-width:74px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tk-r2{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
 .tk-p{font-family:var(--mono);font-size:.94rem;font-weight:600;font-variant-numeric:tabular-nums}
 .tk-c{font-family:var(--mono);font-size:.64rem;font-weight:600;padding:1px 5px;border-radius:5px}
@@ -104,6 +104,7 @@ button{font-family:inherit}
 .btn.pri{flex:1.4;background:linear-gradient(140deg,#7c5cff,#6a4ae8);border-color:transparent;color:#fff;box-shadow:0 6px 16px -10px rgba(124,92,255,.9)}
 .btn.pri:hover{background:linear-gradient(140deg,#8a6cff,#7757f0);color:#fff}
 .btn.ghost{flex:1}
+.btn.off{flex:1;opacity:.45;cursor:default}
 
 /* chips */
 .bar{display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
@@ -184,13 +185,12 @@ body.lock{overflow:hidden}
 
 @media(max-width:880px){
 .agrid{grid-template-columns:1fr}
-.pln{display:none}
 }
-@media(min-width:900px){.tk{flex:1 1 0;min-width:0}}
 @media(max-width:640px){
 .wrap{padding:16px 12px 36px}
 .hdr-in{padding:11px 12px 0}
 .bmeta{display:none}
+.shead .hint{display:none}
 .mpn{margin:0;max-height:100%;height:100dvh;border-radius:0;border:none}
 .mhead{padding:15px 15px 12px}.mbody{padding:14px 15px}.mfoot{padding:11px 15px}
 .ac{padding:13px}
@@ -462,11 +462,13 @@ function fmtDate(d){
 function airdropCard(f){
     const c=f.category,cost=f.cost;
     const hint=f.steps.length?` · ${f.steps.length}단계`:'';
+    const url=safeUrl(f.link);
+    const jump=url==='#'?'<span class="btn ghost off">링크 없음</span>':`<a class="btn ghost" href="${url}" target="_blank" rel="noopener">바로가기 ↗</a>`;
     return`<article class="ac" data-f="${f._id}" tabindex="0">
 <div class="ac-top"><span class="b ${SRCC[f.source]||'s-a'}">${esc(f.source)}</span>${c?`<span class="b cat">${esc(c.label)}</span>`:''}${cost?`<span class="b ${COSTC[cost.key]||'free'}">${esc(cost.label)}</span>`:''}<span class="ac-d">${fmtDate(f.date)}</span></div>
 <h3>${esc(f.title)}</h3>
 <p class="ac-sum">${esc(f.summary||'설명이 없는 항목. 공식 페이지에서 확인.')}</p>
-<div class="ac-foot"><span class="btn pri">참여 설명${hint}</span><a class="btn ghost" href="${safeUrl(f.link)}" target="_blank" rel="noopener">바로가기 ↗</a></div>
+<div class="ac-foot"><span class="btn pri">참여 설명${hint}</span>${jump}</div>
 </article>`;
 }
 
@@ -499,8 +501,9 @@ function renderDropFeed(){
 }
 
 function newsRow(f){
-    const d=f.date;
-    return`<div class="ni"><div class="ni-t">${fmtDate(d)}</div><div class="ni-b"><div class="ni-h"><a href="${safeUrl(f.link)}" target="_blank" rel="noopener">${esc(f.title)}</a></div><div class="ni-s">${esc(f.source)}</div></div></div>`;
+    const d=f.date,url=safeUrl(f.link);
+    const head=url==='#'?`<span>${esc(f.title)}</span>`:`<a href="${url}" target="_blank" rel="noopener">${esc(f.title)}</a>`;
+    return`<div class="ni"><div class="ni-t">${fmtDate(d)}</div><div class="ni-b"><div class="ni-h">${head}</div><div class="ni-s">${esc(f.source)}</div></div></div>`;
 }
 function renderNews(){
     const items=allFeeds.filter(f=>f.cat==='news');
@@ -558,6 +561,7 @@ function openModal(id){
 
     const link=document.getElementById('mLink');
     link.href=safeUrl(f.link);
+    link.style.display=link.href.endsWith('#')?'none':'';
     document.getElementById('modal').classList.add('on');
     document.getElementById('modal').setAttribute('aria-hidden','false');
     document.body.classList.add('lock');
