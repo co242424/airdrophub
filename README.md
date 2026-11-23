@@ -1,22 +1,17 @@
-# AdropHub 개편안 — 서버비 0원, 30분 자동 갱신
+# AdropHub — 서버비 0원, 30분 자동 갱신
 
-준비물은 이 폴더 4개 파일뿐이다. 저장소(`co242424/airdrophub`)는 아직 건드리지 않았다.
+| 파일 | 역할 |
+|---|---|
+| `index.html` | 화면. `data.json`을 raw.githubusercontent.com에서 직접 읽는다(Netlify 재배포 없음) |
+| `data.json` | `scripts/fetch_data.py`가 만든 최신 데이터 — 110건 / 55KB |
+| `scripts/fetch_data.py` | RSS 5개 소스 수집 (표준 라이브러리만, 설치 없음) |
+| `.github/workflows/update-data.yml` | 30분 cron 워크플로 |
 
-```
-index.html                      수정본 (덮어쓰면 끝)
-data.json                       새 파이프라인이 실제로 만든 샘플 — 110건 / 55KB
-scripts/fetch_data.py           수집 스크립트 (표준 라이브러리만, 설치 없음)
-.github/workflows/update-data.yml   30분 cron 워크플로
-```
+## 켜는 법
 
-## 적용 (5단계)
-
-1. `git clone https://github.com/co242424/airdrophub && cd airdrophub`
-2. 이 폴더의 4개 파일을 같은 경로로 복사 (`index.html`은 덮어쓰기)
-3. 커밋 후 푸시
-4. GitHub → Actions → `update-data` → **Run workflow** 로 1회 수동 실행
+1. Actions 탭 → `update-data` → **Run workflow** 로 1회 수동 실행
    - 초록불 + 커밋 `data: refresh ...` 가 생기면 성공
-5. https://adrophub.netlify.app/ 을 새로고침 → 헤더가 `🟢 방금 갱신 · 5/5 소스` 인지 확인
+2. https://adrophub.netlify.app/ 을 새로고침 → 헤더가 `🟢 방금 갱신 · 5/5 소스` 인지 확인
 
 ## 확인 지점 (끝난 것과 안 끝난 것)
 
@@ -53,4 +48,4 @@ Netlify 무료 플랜은 2026년 기준 크레딧제다. 무료 300크레딧, **
 
 ## 롤백
 
-`git revert <커밋>` 한 번이면 원래 파일로 돌아간다. 이전 방식(SOURCES + rss2json)은 그대로 남아 있다.
+`git revert c3b3db8` 한 번이면 이전 `index.html`(SOURCES + rss2json)로 돌아간다.
