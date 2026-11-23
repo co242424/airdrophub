@@ -3,8 +3,8 @@
 | 파일 | 역할 |
 |---|---|
 | `index.html` | 화면. `data.json`을 raw.githubusercontent.com에서 직접 읽는다(Netlify 재배포 없음) |
-| `data` 브랜치의 `data.json` | `scripts/fetch_data.py`가 만든 최신 데이터 — 110건 / 55KB. 사이트가 raw에서 직접 읽는다 |
-| `scripts/fetch_data.py` | RSS 5개 소스 수집 (표준 라이브러리만, 설치 없음) |
+| `data` 브랜치의 `data.json` | `scripts/fetch_data.py`가 만든 최신 데이터 — 110건 / 157KB. 사이트가 raw에서 직접 읽는다 |
+| `scripts/fetch_data.py` | RSS 5개 소스 수집 (표준 라이브러리만, 설치 없음). 에어드롭 항목은 `summary`·`steps`·`category`·`cost`·`warning`까지 파싱 |
 | `.github/workflows/update-data.yml` | 30분 cron 워크플로. 결과는 `data` 브랜치에 커밋한다 |
 
 ## 켜는 법
@@ -21,6 +21,8 @@
 | 화면이 그 데이터를 쓰나 | 페이지 소스에 `rss2json` 없음, 첫 방문에 API 키 모달 없음 |
 | 소스 상태가 보이나 | 헤더에 `5/5 소스`, 에어드롭 탭 부제에 5개 소스 이름 |
 | 소스 하나가 죽으면 | 헤더 `4/5 소스`, 부제에 `Airdrops.io ✕` 처럼 표시 |
+| 참여 방법이 보이나 | 에어드롭 카드에 `참여 설명 ·N단계` 버튼 → 모달에 단계·주의사항·공식 링크 |
+| 단계가 없는 항목 | 모달이 "참여 단계를 담지 않는다"고 밝히고 요약·공식 링크만 보여준다 |
 | 30분마다 도나 | Actions 실행 기록이 30분 간격, 커밋이 같은 간격 |
 
 ## 왜 Netlify로 재배포하지 않나 (중요)
